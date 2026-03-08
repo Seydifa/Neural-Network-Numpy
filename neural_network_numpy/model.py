@@ -39,7 +39,7 @@ class NeuralNetwork:
         return self.forward(x)
 
     def backward(self, x, y, dloss_fn):
-        """Performs backpropagation to compute gradients."""
+        """Performs backpropagation to compute gradients and returns the prediction."""
         a_final = self.forward(x)
         
         # Error for the last layer
@@ -58,6 +58,8 @@ class NeuralNetwork:
             layer.dw = (layer.delta.T @ prev_a)
             layer.db = layer.delta.sum(axis=0)
             prev_a = layer.a
+        
+        return a_final
 
     def get_batches(self, n_samples, batch_size, shuffle=True):
         """Generates indices for batches."""
@@ -91,12 +93,10 @@ class NeuralNetwork:
                 batch_x = x[batch_indices]
                 batch_y = y[batch_indices]
                 
-                # Forward & Backward
-                self.backward(batch_x, batch_y, dloss_fn)
+                # Forward & Backward (Backward now returns prediction to avoid double forward)
+                pred = self.backward(batch_x, batch_y, dloss_fn)
                 
-                # Get current global loss for tracking (typically on full or current batch)
-                # Here we use the loss on the current batch for efficiency
-                pred = self.forward(batch_x)
+                # Get current global loss for tracking
                 loss_val = loss_fn(pred, batch_y)
                 epoch_losses.append(loss_val)
                 

@@ -36,3 +36,16 @@ def dlinear(x):
 def numerical_derivative(f, x, h=1e-9):
     """Centred Euler approximation of the derivative."""
     return (f(x + h) - f(x - h)) / (2 * h)
+
+def softmax(x):
+    """Softmax activation function."""
+    exps = np.exp(x - np.max(x, axis=-1, keepdims=True))
+    return exps / np.sum(exps, axis=-1, keepdims=True)
+
+def dsoftmax(x):
+    """
+    Derivative of Softmax. 
+    Note: In backprop, it's usually combined with Cross-Entropy.
+    We return 1 here so that delta = (y_pred - y_true) in backward.
+    """
+    return 1

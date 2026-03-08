@@ -31,6 +31,13 @@ $$ f(x) = \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} $$
 - **Best for:** Hidden layers where you want the data to be centered around zero.
 - **Pros:** Stronger gradients than Sigmoid.
 
+### 4. Softmax
+Used for **Multi-class Classification**. It turns a vector of numbers into a vector of probabilities that sum to 1.
+$$ \sigma(z)_i = \frac{e^{z_i}}{\sum_{j=1}^K e^{z_j}} $$
+
+- **Best for:** Output layer in multi-class problems (e.g., MNIST).
+- **Pros:** Provides a clear probability distribution across categories.
+
 ## Visualization
 
 ```mermaid

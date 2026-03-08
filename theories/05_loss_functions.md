@@ -17,10 +17,16 @@ $$ \mathcal{L}(\hat{y}, y) = (\hat{y} - y)^2 $$
 - **Intuition:** Large errors are punished much more severely than small errors because of the squaring.
 
 ### 2. Log Loss / Binary Cross-Entropy (BCE)
-Used for **Classification** (predicting a category, like Cat vs. Dog).
-It compares the predicted probability to the actual label (0 or 1).
+Used for **Binary Classification**. It compares the predicted probability to the actual label (0 or 1).
 
 $$ \mathcal{L}(\hat{y}, y) = -[y \ln(\hat{y}) + (1 - y) \ln(1 - \hat{y})] $$
+
+### 3. Categorical Cross-Entropy
+The multi-class extension of Log Loss. Used when you have 3 or more categories.
+
+$$ \mathcal{L}(\hat{y}, y) = -\sum_{i=1}^C y_i \ln(\hat{y}_i) $$
+
+- **Note:** In our implementation, we combine Softmax and Categorical Cross-Entropy in the backpropagation step for maximum numerical stability.
 
 - **Intuition:** If the real label is $1$ and you predict a low probability (e.g., $0.1$), the logarithm sends the loss through the roof ($\infty$). If you're correct, the loss is close to $0$.
 
